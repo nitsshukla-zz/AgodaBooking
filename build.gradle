@@ -22,14 +22,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
-	implementation 'org.junit.platform:junit-platform-engine:1.7.2'
+	implementation 'com.opencsv:opencsv:5.5'
+	implementation 'com.google.code.gson:gson:2.8.7'
+
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+	testImplementation 'org.junit.platform:junit-platform-engine:1.7.2'
 	//testImplementation 'org.springframework.security:spring-security-test'
 }
 
