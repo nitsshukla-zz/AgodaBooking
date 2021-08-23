@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  app:
+    image: 'nitsshukla/agoda/booking'
+    build:
+      context: .
+    container_name: agoda-booking-app
+    depends_on:
+      - db_agoda_booking
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_agoda_booking:5432/agoda_booking
+      - SPRING_DATASOURCE_USERNAME=agoda-admin
+      - SPRING_DATASOURCE_PASSWORD=12345678
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db_agoda_booking:
+    image: 'postgres:13.1-alpine'
+    container_name: db_agoda_booking
+    environment:
+      - POSTGRES_USER=agoda-admin
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=agoda_booking
+
+
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    ports:
+      - 9090:9090
+    depends_on:
+      - app
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    restart: always
