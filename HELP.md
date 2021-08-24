@@ -4,13 +4,16 @@ Make sure you have a docker, gradle installed with you.
 
 * Start docker
 * Go to the directory and execute the following command:
-* `./gradlew clean build`
-*  `docker image build -t  nitsshukla/agoda/booking` 
-*   `docker-compose up`
+    * `./gradlew clean build`
+    * `docker image build -t  nitsshukla/agoda/booking` 
+    * `docker-compose up`
+*  If you don't have docker, you can just run the following command with **CSV** mode:
+    *  `./gradlew bootRun -Pargs=--mode=CSV`
 
 ##Documentation
 *  Refer swagger: http://localhost:8090/swagger-ui/#/booking-controller
 *  For monitoring, prometheus is setup at: http://localhost:9090/
+*  Actuator endpoints: http://localhost:8090/actuator
   
 ### Reference Documentation
 For further reference, please consider the following sections:

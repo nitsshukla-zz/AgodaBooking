@@ -1,5 +1,6 @@
 package com.agoda.booking.tracker.service.impl;
 
+import com.agoda.booking.tracker.config.ServiceConfig;
 import com.agoda.booking.tracker.dtos.BookingRequestList;
 import com.agoda.booking.tracker.dtos.HotelBookingSummaryResponse;
 import com.agoda.booking.tracker.helper.BookingHelper;
@@ -18,9 +19,10 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.agoda.booking.tracker.config.ServiceConfig.MODE_DB;
 import static java.math.BigDecimal.ZERO;
 
-@Service
+@Service(value = MODE_DB)
 @RequiredArgsConstructor
 public class BookingDBServiceImpl implements BookingService {
 

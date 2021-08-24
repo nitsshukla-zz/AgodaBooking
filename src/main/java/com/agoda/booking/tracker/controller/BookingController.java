@@ -1,5 +1,6 @@
 package com.agoda.booking.tracker.controller;
 
+import com.agoda.booking.tracker.config.ServiceConfig;
 import com.agoda.booking.tracker.dtos.BookingRequestList;
 import com.agoda.booking.tracker.dtos.CustomersInfo;
 import com.agoda.booking.tracker.dtos.CustomerSummaryResponse;
@@ -11,6 +12,7 @@ import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -37,10 +39,16 @@ import java.util.Set;
 import static com.agoda.booking.tracker.model.Booking.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/bookings")
 @Timed(histogram = true)
 public class BookingController {
-  @Autowired private BookingService bookingService;
+  private final BookingService bookingService;
+
+  @Autowired
+  public BookingController(ServiceConfig.ServiceFactory serviceFactory) {
+    bookingService = serviceFactory.get();
+  }
 
   @PostMapping(
       consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },
@@ -48,14 +56,16 @@ public class BookingController {
   public HotelBookingSummaryResponse postHotelBookingSummary(@RequestBody @Valid BookingRequestList bookingRequestList) {
     return bookingService.postHotelBookingSummary(bookingRequestList);
   }
+
   @GetMapping("/hotel/{hotelId}")
   @ResponseBody
-  //TODO: Put prometheus, authorization
+  //TODO: Put authorization
   public HotelBookingSummary getHotelBookingSummary(
       @PathVariable("hotelId") @Valid BigInteger hotelId,
       @RequestParam(value = "current_to_usd_exchange_rate", required = false) BigDecimal currentToUSDExchangeRate) {
     return bookingService.getHotelBookingSummary(hotelId, currentToUSDExchangeRate);
   }
+
   @PostMapping("/customer/summary")
   public CustomerSummaryResponse getCustomerSummary(@RequestBody CustomersInfo customersInfo) {
     return bookingService.getCustomerSummary(customersInfo);

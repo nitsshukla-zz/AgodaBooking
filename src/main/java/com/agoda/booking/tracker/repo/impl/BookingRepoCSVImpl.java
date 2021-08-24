@@ -12,9 +12,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-//@Component
+import static com.agoda.booking.tracker.repo.impl.BookingRepoCSVImpl.CSV_REPO;
+
+@Component(value = CSV_REPO)
 public class BookingRepoCSVImpl implements BookingRepo {
   public static final String BOOKING_DATA_CSV = "BookingData.csv";
+  public static final String CSV_REPO = "CSV_Repo";
   private final List<Booking> bookingList;
   public BookingRepoCSVImpl() throws IOException {
     bookingList = CSVWrapper.read(BOOKING_DATA_CSV, Booking.class);

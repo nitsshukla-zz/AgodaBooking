@@ -11,6 +11,8 @@ import com.agoda.booking.tracker.repo.BookingRepo;
 import com.agoda.booking.tracker.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -18,15 +20,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static com.agoda.booking.tracker.config.ServiceConfig.MODE_CSV;
 import static com.agoda.booking.tracker.helper.CollectionHelper.sizeOf;
+import static com.agoda.booking.tracker.repo.impl.BookingRepoCSVImpl.CSV_REPO;
 import static java.math.BigDecimal.ZERO;
 
-//TODO: Make it abstract factory, for CSV/DB
-//@Service
 @RequiredArgsConstructor
+@Service(value = MODE_CSV)
 public class BookingCSVServiceImpl implements BookingService {
 
-  @Autowired private final BookingRepo bookingRepo;
+  @Autowired
+  @Qualifier(CSV_REPO)
+  private final BookingRepo bookingRepo;
+
   @Override
   public CustomerSummaryResponse getCustomerSummary(CustomersInfo customersInfo) {
     return new CustomerSummaryResponse(
