@@ -1,6 +1,6 @@
 # Getting Started
 ## Installation
-Make sure you have a docker, gradle installed with you.
+Make sure you have a docker, gradle 6.8+ installed with you.
 
 * Start docker
 * Go to the directory and execute the following command:
