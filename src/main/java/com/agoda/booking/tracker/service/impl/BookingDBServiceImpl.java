@@ -1,13 +1,14 @@
 package com.agoda.booking.tracker.service.impl;
 
-import com.agoda.booking.tracker.config.ServiceConfig;
+import com.agoda.booking.tracker.dtos.BookingRequest;
 import com.agoda.booking.tracker.dtos.BookingRequestList;
-import com.agoda.booking.tracker.dtos.HotelBookingSummaryResponse;
-import com.agoda.booking.tracker.helper.BookingHelper;
-import com.agoda.booking.tracker.helper.CollectionHelper;
 import com.agoda.booking.tracker.dtos.CustomerSummaryResponse;
 import com.agoda.booking.tracker.dtos.CustomersInfo;
 import com.agoda.booking.tracker.dtos.HotelBookingSummary;
+import com.agoda.booking.tracker.dtos.HotelBookingSummaryResponse;
+import com.agoda.booking.tracker.exception.DuplicateBookingPostedException;
+import com.agoda.booking.tracker.helper.BookingHelper;
+import com.agoda.booking.tracker.helper.CollectionHelper;
 import com.agoda.booking.tracker.model.Booking;
 import com.agoda.booking.tracker.repo.BookingRepo;
 import com.agoda.booking.tracker.service.BookingService;
@@ -50,6 +51,8 @@ public class BookingDBServiceImpl implements BookingService {
 
   @Override
   public HotelBookingSummaryResponse postHotelBookingSummary(BookingRequestList bookingRequestList) {
+    checkDupId(bookingRequestList.getBookingRequests());
+
     List<Booking> bookingList = bookingRequestList
         .getBookingRequests()
         .stream()
@@ -58,6 +61,12 @@ public class BookingDBServiceImpl implements BookingService {
     Iterable<Booking> processedCountIterable = bookingDAORepo.saveAll(bookingList);
 
     return new HotelBookingSummaryResponse(CollectionHelper.sizeOf(processedCountIterable.iterator()));
+  }
+
+  private void checkDupId(List<BookingRequest> bookingRequests) {
+    List<Booking> bookings = bookingDAORepo.findByBookingIdIn(bookingRequests.stream().map(BookingRequest::getBookingId).collect(Collectors.toSet()));
+    if (!bookings.isEmpty())
+      throw new DuplicateBookingPostedException(bookings);
   }
 
 }

@@ -65,7 +65,7 @@ public class BookingTest {
 	}
 
 	@ParameterizedTest
-	@CsvFileSource(files = "src/test/resources/hotelBooking.csv", numLinesToSkip = 1)
+	@CsvFileSource(files = "src/test/resources/static/hotelBooking.csv", numLinesToSkip = 1)
 	void onPostHotelBookings(String hotelId, String bookingId, String custId,
 																						 String localCurrencySP, String currency, BigDecimal exchangeRateInUSD) {
 		ResponseEntity<HotelBookingSummaryResponse> response = this.restTemplate.postForEntity(

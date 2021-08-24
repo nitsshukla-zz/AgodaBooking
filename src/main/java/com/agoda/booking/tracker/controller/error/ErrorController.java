@@ -1,5 +1,6 @@
 package com.agoda.booking.tracker.controller.error;
 
+import com.agoda.booking.tracker.exception.DuplicateBookingPostedException;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -33,5 +34,10 @@ public class ErrorController  extends ResponseEntityExceptionHandler  {
   public ResponseEntity<String> handleGenericException(MethodArgumentNotValidException ex, WebRequest request) {
     logger.error("invalid exception: " + ex);
     return ResponseEntity.internalServerError().body(ex.getMessage());
+  }
+  @ExceptionHandler(DuplicateBookingPostedException.class)
+  public ResponseEntity<String> handleDupBookingIdException(DuplicateBookingPostedException ex, WebRequest request) {
+    logger.error("invalid exception: " + ex);
+    return ResponseEntity.unprocessableEntity().body(ex.getMessage());
   }
 }

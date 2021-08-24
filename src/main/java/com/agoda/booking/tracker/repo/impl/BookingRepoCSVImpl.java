@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.agoda.booking.tracker.repo.impl.BookingRepoCSVImpl.CSV_REPO;
 
+//TODO: Violating liskov's principle it seems, re-check
 @Component(value = CSV_REPO)
 public class BookingRepoCSVImpl implements BookingRepo {
   public static final String BOOKING_DATA_CSV = "BookingData.csv";
@@ -24,6 +26,12 @@ public class BookingRepoCSVImpl implements BookingRepo {
     //Let's not start the application if CSV file is not found.
     //Alternatively, we can assume no booking-data and start app
   }
+
+  @Override
+  public List<Booking> findByBookingIdIn(Set<BigInteger> ids) {
+    throw new IllegalStateException("Not implemented for CSV");
+  }
+
   @Override
   public List<Booking> getBookingByCustomerId(String customerId) {
     throw new IllegalStateException("Not implemented.");
