@@ -38,8 +38,8 @@ public class CSVWrapper {
     URL fileURL = CSVWrapper.class.getClassLoader().getResource("static/" + fileName);
     if (fileURL == null) throw new FileNotFoundException("File " + fileName + " not found");
     try (OutputStream out =
-             new FileOutputStream(fileURL.getFile())) {
-      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+             new FileOutputStream(fileURL.getFile());
+         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out))) {
       ColumnPositionMappingStrategy mappingStrategy = new ColumnPositionMappingStrategy();
       mappingStrategy.setType(classFor);
 

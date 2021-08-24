@@ -1,0 +1,4 @@
+"hotel_id","booking_id","customer_id","selling_price_local_currency","currency","to_usd_exchange_rate"
+"1000134","1000000","4e9a8620-7791-4125-be33-7229ff441be0","939","SGD","1.00"
+"1000134","1000001","7ac534a5-ec17-48a4-9149-cc260ee3a653","897","SGD","0.33"
+"1000134","1000002","5911d6a8-e70e-42d6-9c2e-cc2a9c5e2690","924","SGD","0.67"

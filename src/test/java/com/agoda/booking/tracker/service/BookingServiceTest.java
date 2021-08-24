@@ -23,7 +23,7 @@ public abstract class BookingServiceTest {
   //"1000134","1000000","4e9a8620-7791-4125-be33-7229ff441be0","939","SGD","0.76"
   protected static final String CUST_1 = "4e9a8620-7791-4125-be33-7229ff441be0";
   protected static final BigInteger HOTEL_1 = BigInteger.valueOf(1000134);
-  protected static final Booking BOOKING_1 = new Booking();
+  public static final Booking BOOKING_1 = new Booking();
   protected static final CustomersInfo customersInfo = new CustomersInfo(Collections.singleton(CUST_1));
   protected BookingService bookingService;
   @Mock
