@@ -5,7 +5,7 @@ Make sure you have a docker, gradle 6.8+ installed with you.
 * Start docker
 * Go to the directory and execute the following command:
     * `./gradlew clean build`
-    * `docker image build -t  nitsshukla/agoda/booking` 
+    * `docker image build -t  nitsshukla/agoda/booking .` 
     * `docker-compose up`
 *  If you don't have docker, you can just run the following command with **CSV** mode:
     *  `./gradlew bootRun -Pargs=--mode=CSV`
