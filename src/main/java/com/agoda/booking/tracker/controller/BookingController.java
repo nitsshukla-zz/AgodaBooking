@@ -9,6 +9,9 @@ import com.agoda.booking.tracker.dtos.HotelBookingSummaryResponse;
 import com.agoda.booking.tracker.service.BookingService;
 import com.google.gson.annotations.SerializedName;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,6 +53,15 @@ public class BookingController {
     bookingService = serviceFactory.get();
   }
 
+  @ApiOperation(value = "Upload Bookings in JSON/XML format")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 200, message = "Bookings inserted successfully"),
+          @ApiResponse(code = 400, message = "Validation failed"),
+          @ApiResponse(code = 422, message = "Same Booking-ID exception"),
+          @ApiResponse(code = 500, message = "Internal error")
+      }
+  )
   @PostMapping(
       consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },
       produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
@@ -57,6 +69,14 @@ public class BookingController {
     return bookingService.postHotelBookingSummary(bookingRequestList);
   }
 
+  @ApiOperation(value = "Query bookings for a hotel")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 200, message = "Bookings queried successfully"),
+          @ApiResponse(code = 400, message = "Validation failed"),
+          @ApiResponse(code = 500, message = "Internal error")
+      }
+  )
   @GetMapping("/hotel/{hotelId}")
   @ResponseBody
   //TODO: Put authorization
@@ -66,6 +86,14 @@ public class BookingController {
     return bookingService.getHotelBookingSummary(hotelId, currentToUSDExchangeRate);
   }
 
+  @ApiOperation(value = "Query customer summary")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 200, message = "Customer summary queried successfully"),
+          @ApiResponse(code = 400, message = "Validation failed"),
+          @ApiResponse(code = 500, message = "Internal error")
+      }
+  )
   @PostMapping("/customer/summary")
   public CustomerSummaryResponse getCustomerSummary(@RequestBody CustomersInfo customersInfo) {
     return bookingService.getCustomerSummary(customersInfo);
